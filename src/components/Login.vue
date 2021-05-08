@@ -1,6 +1,8 @@
 <template>
   <div>
-      <h1>Login</h1>
+      <div class="container">
+
+      </div>
   </div>
 </template>
 
@@ -11,5 +13,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+  .container{
+    width: 100px;
+    height: 100px;
+    background-color:pink;
+  }
 </style>
