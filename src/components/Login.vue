@@ -1,35 +1,62 @@
 <template>
-
-    <div class="container">
-      <div class="login_box">
-        <!--头像 -->
-        <div class="avatar_box">
-          <img src="@/assets/logo.png" />
-        </div>
-        <!-- 提交信息表单 -->
-        <el-form class="login-form" :model="loginForm">
-          <el-form-item class="from-item-style">
-            <el-input prefix-icon="el-icon-user" placeholder="请输入登陆账号"></el-input>
-          </el-form-item>
-           <el-form-item class="from-item-style">
-            <el-input prefix-icon="el-icon-lock" placeholder="请输入登陆密码"></el-input>
-          </el-form-item>
-        </el-form>
-        <!-- 提交按钮 -->
-        <el-row class="login-btn">
-           <el-button type="primary">登录</el-button>
-           <el-button type="info">重置</el-button>
-        </el-row>
+  <div class="container">
+    <div class="login_box">
+      <!--头像 -->
+      <div class="avatar_box">
+        <img src="@/assets/logo.png" />
       </div>
+      <!-- 提交信息表单 -->
+      <el-form class="login-form" :model="loginForm" :rules="loginFormRules" ref="loginFormRefresh">
+        <el-form-item class="from-item-style" prop="username">
+          <el-input
+            type="text"
+            prefix-icon="el-icon-user"
+            placeholder="请输入登陆账号"
+            v-model="loginForm.username"
+          ></el-input>
+        </el-form-item>
+        <el-form-item class="from-item-style" prop="password">
+          <el-input
+            type="password"
+            prefix-icon="el-icon-lock"
+            placeholder="请输入登陆密码"
+            v-model="loginForm.password"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <!-- 提交按钮 -->
+      <el-row class="login-btn">
+        <el-button type="primary">登录</el-button>
+        <el-button type="info" @click="resetLoginForm">重置</el-button>
+      </el-row>
     </div>
-
+  </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      loginForm:{}
+      loginForm: {
+        username: "",
+        password: "",
+      },
+      loginFormRules: {
+        username: [
+          { required: true, message: "请输入登陆账号", trigger: "blur" },
+          { min: 3, max: 10, message: "登陆账号长度在 3 到 10 个字符", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "请输入登陆密码", trigger: "blur" },
+          { min: 3, max: 15, message: "登陆密码长度在 3 到 15 个字符", trigger: "blur" },
+        ],
+      },
+    };
+  },
+  methods:{
+    // 表单重置
+    resetLoginForm(){
+      this.$refs.loginFormRefresh.resetFields()
     }
   }
 };
@@ -67,14 +94,14 @@ export default {
       }
     }
     // 输入内容
-    .login-form{
+    .login-form {
       margin-top: 90px;
-      .from-item-style{
-        margin:30px 20px;
+      .from-item-style {
+        margin: 30px 20px;
       }
     }
     // 按钮
-    .login-btn{
+    .login-btn {
       position: absolute;
       right: 0;
       margin: 0 20px;
