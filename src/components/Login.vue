@@ -26,7 +26,7 @@
       </el-form>
       <!-- 提交按钮 -->
       <el-row class="login-btn">
-        <el-button type="primary">登录</el-button>
+        <el-button type="primary" @click="validateLoginForm">登录</el-button>
         <el-button type="info" @click="resetLoginForm">重置</el-button>
       </el-row>
     </div>
@@ -57,7 +57,17 @@ export default {
     // 表单重置
     resetLoginForm(){
       this.$refs.loginFormRefresh.resetFields()
+    },
+    // 表单校检
+    validateLoginForm(){
+      this.$refs.loginFormRefresh.validate(validate=>{
+        if(!validate) return
+        this.$http.post('login',this.loginForm).then(res=>{
+          console.log(res)
+        })
+      })
     }
+
   }
 };
 </script>
