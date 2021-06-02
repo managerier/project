@@ -63,7 +63,21 @@ export default {
       this.$refs.loginFormRefresh.validate(validate=>{
         if(!validate) return
         this.$http.post('login',this.loginForm).then(res=>{
-          console.log(res)
+          let data = res.data.data;
+          let meta = res.data.meta;
+          console.log(res,"res");
+          console.log(meta,"meta");
+          console.log(meta.status,"meta.status");
+          if(meta.status==200){
+            window.localStorage.setItem('ele-token',data.token);
+            this.$router.push('/home')
+          }else{
+             this.$message({
+               showClose: true,
+               message: meta.msg,
+               type: 'warning'
+            });
+          }
         })
       })
     }
